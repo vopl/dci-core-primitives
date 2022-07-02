@@ -51,38 +51,53 @@ namespace dci::primitives
               Base&& std()       &&{return std::move(*this);}
         const Base&& std() const &&{return std::move(*this);}
 
-        friend bool operator==(const String& lhs, const String& rhs)
-        {
-            return lhs.std() == rhs.std();
-        }
+        friend bool operator==(const String& lhs, const String& rhs);
+        friend traits_type::comparison_category operator<=>(const String& lhs, const String& rhs);
 
-        friend auto operator<=>(const String& lhs, const String& rhs)
-        {
-            return lhs.std() <=> rhs.std();
-        }
+        template <class Lhs, class Rhs> requires(std::is_same_v<Lhs, String> && !std::is_same_v<Rhs, String>) friend bool operator==(const Lhs& lhs, const Rhs& rhs);
+        template <class Lhs, class Rhs> requires(std::is_same_v<Lhs, String> && !std::is_same_v<Rhs, String>) friend traits_type::comparison_category operator<=>(const Lhs& lhs, const Rhs& rhs);
 
-        template <class Rhs> requires(!std::is_same_v<Rhs, String>)
-        friend bool operator==(const String& lhs, const Rhs& rhs)
-        {
-            return lhs.std() == rhs;
-        }
-
-        template <class Rhs> requires(!std::is_same_v<Rhs, String>)
-        friend auto operator<=>(const String& lhs, const Rhs& rhs)
-        {
-            return lhs.std() <=> rhs;
-        }
-
-        template <class Lhs> requires(!std::is_same_v<Lhs, String>)
-        friend bool operator==(const Lhs& lhs, const String& rhs)
-        {
-            return lhs == rhs.std();
-        }
-
-        template <class Lhs> requires(!std::is_same_v<Lhs, String>)
-        friend auto operator<=>(const Lhs& lhs, const String& rhs)
-        {
-            return lhs <=> rhs.std();
-        }
+        template <class Lhs, class Rhs> requires(!std::is_same_v<Lhs, String> && std::is_same_v<Rhs, String>) friend bool operator==(const Lhs& lhs, const Rhs& rhs);
+        template <class Lhs, class Rhs> requires(!std::is_same_v<Lhs, String> && std::is_same_v<Rhs, String>) friend traits_type::comparison_category operator<=>(const Lhs& lhs, const Rhs& rhs);
     };
+
+    /////////0/////////1/////////2/////////3/////////4/////////5/////////6/////////7
+    inline bool operator==(const String& lhs, const String& rhs)
+    {
+        return lhs.std() == rhs.std();
+    }
+
+    /////////0/////////1/////////2/////////3/////////4/////////5/////////6/////////7
+    inline String::traits_type::comparison_category operator<=>(const String& lhs, const String& rhs)
+    {
+        return lhs.std() <=> rhs.std();
+    }
+
+    /////////0/////////1/////////2/////////3/////////4/////////5/////////6/////////7
+    template <class Lhs, class Rhs> requires(std::is_same_v<Lhs, String> && !std::is_same_v<Rhs, String>)
+    bool operator==(const Lhs& lhs, const Rhs& rhs)
+    {
+        return lhs.std() == rhs;
+    }
+
+    /////////0/////////1/////////2/////////3/////////4/////////5/////////6/////////7
+    template <class Lhs, class Rhs> requires(std::is_same_v<Lhs, String> && !std::is_same_v<Rhs, String>)
+    String::traits_type::comparison_category operator<=>(const Lhs& lhs, const Rhs& rhs)
+    {
+        return lhs.std() <=> rhs;
+    }
+
+    /////////0/////////1/////////2/////////3/////////4/////////5/////////6/////////7
+    template <class Lhs, class Rhs> requires(!std::is_same_v<Lhs, String> && std::is_same_v<Rhs, String>)
+    bool operator==(const Lhs& lhs, const Rhs& rhs)
+    {
+        return lhs == rhs.std();
+    }
+
+    /////////0/////////1/////////2/////////3/////////4/////////5/////////6/////////7
+    template <class Lhs, class Rhs> requires(!std::is_same_v<Lhs, String> && std::is_same_v<Rhs, String>)
+    String::traits_type::comparison_category operator<=>(const Lhs& lhs, const Rhs& rhs)
+    {
+        return lhs <=> rhs.std();
+    }
 }

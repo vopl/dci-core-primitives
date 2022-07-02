@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "primitives/bytes.hpp"
+#include "primitives/byte.hpp"
 #include "primitives/void.hpp"
 #include "primitives/floating.hpp"
 #include "primitives/integral.hpp"
@@ -19,6 +19,7 @@
 #include "primitives/list.hpp"
 #include "primitives/map.hpp"
 #include "primitives/ptr.hpp"
+#include "primitives/opt.hpp"
 #include "primitives/set.hpp"
 #include "primitives/tuple.hpp"
 #include "primitives/variant.hpp"
