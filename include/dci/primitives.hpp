@@ -7,8 +7,9 @@
 
 #pragma once
 
+#include "primitives/none.hpp"
+
 #include "primitives/byte.hpp"
-#include "primitives/void.hpp"
 #include "primitives/floating.hpp"
 #include "primitives/integral.hpp"
 

@@ -9,5 +9,5 @@
 
 namespace dci::primitives
 {
-    using void_     = void;
+    struct None {};
 }
